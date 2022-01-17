@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC, Suspense } from "react";
 import GlobalStyles from "./style/GlobalStyle";
 import { Routes, Route } from "react-router-dom";
-import { Layout } from "./common";
+import { Fallback, Layout, Page } from "./common";
 import {
   Home,
   Cryptocurrencies,
@@ -11,22 +11,94 @@ import {
   Favourites,
   Bookmarks,
   Feeds,
-} from "./features";
+} from "./helpers/lazyRoutes";
 
-const App = () => {
+const App: FC = () => {
   return (
     <>
       <GlobalStyles />
       <Layout />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/cryptocurrencies" element={<Cryptocurrencies />} />
-        <Route path="/exchanges" element={<Exchanges />} />
-        <Route path="/crypto/:coinId" element={<CryptoDetails />} />
-        <Route path="/news" element={<News />} />
-        <Route path="/favourites" element={<Favourites />} />
-        <Route path="/bookmarks" element={<Bookmarks />} />
-        <Route path="/feed" element={<Feeds />} />
+        <Route
+          path="/"
+          element={
+            <Page>
+              <Suspense fallback={<Fallback />}>
+                <Home />
+              </Suspense>
+            </Page>
+          }
+        />
+        <Route
+          path="/cryptocurrencies"
+          element={
+            <Page>
+              <Suspense fallback={<Fallback />}>
+                <Cryptocurrencies />
+              </Suspense>
+            </Page>
+          }
+        />
+        <Route
+          path="/exchanges"
+          element={
+            <Page>
+              <Suspense fallback={<Fallback />}>
+                <Exchanges />
+              </Suspense>
+            </Page>
+          }
+        />
+        <Route
+          path="/crypto/:coinId"
+          element={
+            <Page>
+              <Suspense fallback={<Fallback />}>
+                <CryptoDetails />
+              </Suspense>
+            </Page>
+          }
+        />
+        <Route
+          path="/news"
+          element={
+            <Page>
+              <Suspense fallback={<Fallback />}>
+                <News />
+              </Suspense>
+            </Page>
+          }
+        />
+        <Route
+          path="/favourites"
+          element={
+            <Page>
+              <Suspense fallback={<Fallback />}>
+                <Favourites />
+              </Suspense>
+            </Page>
+          }
+        />
+        <Route
+          path="/bookmarks"
+          element={
+            <Page>
+              <Suspense fallback={<Fallback />}>
+                <Bookmarks />
+              </Suspense>
+            </Page>
+          }
+        />
+        <Route
+          path="/feed"
+          element={
+            <Page>
+              <Suspense fallback={<Fallback />}>
+                <Feeds />
+              </Suspense>
+            </Page>
+          }
+        />
       </Routes>
     </>
   );

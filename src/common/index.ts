@@ -6,3 +6,4 @@ export { default as Layout } from "./sharedComponents/Layout";
 
 //ui components
 export { default as Page } from "./uiComponents/Page";
+export { default as Fallback } from "./uiComponents/Fallback";
