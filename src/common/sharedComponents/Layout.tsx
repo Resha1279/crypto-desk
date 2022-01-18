@@ -1,12 +1,17 @@
 import React, { FC } from "react";
+import { Row } from "..";
+import Sidebar from "./Sidebar";
 
 interface Props {}
 
-const Layout: FC = (props: Props) => {
+const Layout: FC<Props> = ({ children }) => {
   return (
     <div>
-      Layout
-      <div></div>
+      <Sidebar />
+      <Row>
+        <div>sidebar</div>
+        {children}
+      </Row>
       <footer>footer</footer>
     </div>
   );

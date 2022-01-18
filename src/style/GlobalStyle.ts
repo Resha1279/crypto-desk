@@ -2,12 +2,26 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 
+:root {
+  /* Colors */
+  --black: #09090c;
+  --grey: #a4b2bc;
+  --white: #fff;
+  --background: rgba(137, 171, 245, 0.37);
+}
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 
 }
+
+a{
+  text-decoration: none;
+}
+
+
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
