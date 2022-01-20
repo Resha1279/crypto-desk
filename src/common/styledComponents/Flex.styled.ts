@@ -14,7 +14,7 @@ export const Row = styled.div<RowProps>`
   justify-content: ${({ spaceBetween }) =>
     spaceBetween ? "space-between" : "none"};
   align-items: center;
-  min-width: ${({ width }) => (width ? `${width}px` : "100%")};
+  width: ${({ width }) => (width ? `${width}px` : "100%")};
   gap: ${({ gap }) => (gap ? `${gap}px` : "0px")};
   flex-wrap: wrap;
   transition: 0.5s ease;
