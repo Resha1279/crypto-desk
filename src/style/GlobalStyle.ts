@@ -7,7 +7,12 @@ const GlobalStyles = createGlobalStyle`
   --black: #09090c;
   --grey: #a4b2bc;
   --white: #fff;
-  --background: rgba(137, 171, 245, 0.37);
+  --background: rgba(200, 200, 200);
+  --text-primary-black:rgba(0, 0, 0, 0.6);
+  --text-secondary-black:rgba(0, 0, 0, 0.4);
+  --text-primary-white:rgba(255, 255, 255, 0.85);
+  --text-secondary-white:rgba(255, 255, 255, 0.65);
+--text-color:#ffee10;
 }
 
 *{
@@ -29,11 +34,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #fefefe;
+  background-color: var(--background);
 }
 
 p{
-    opacity: 0.6;
+  
     line-height: 1.5;
 }
 

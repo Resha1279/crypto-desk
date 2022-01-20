@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 type ContainerProps = {
-  position?: string;
+  absolute?: boolean;
 };
 
 type SidebarContainerProps = {
@@ -9,28 +9,35 @@ type SidebarContainerProps = {
 };
 
 export const Container = styled.div<ContainerProps>`
-  position: ${(props) => (props.position ? props.position : "relative")};
-  .active {
-    border-right: 4px solid var(--white);
-  }
+  position: ${({ absolute }) => (absolute ? "absolute" : "relative")};
+`;
+
+export const PageContainer = styled.div`
+  padding: 0.6rem 4rem 0 18rem;
 `;
 
 export const SidebarContainer = styled.div<SidebarContainerProps>`
   background-color: #000;
   width: 3.5rem;
   height: 80vh;
-  margin-top: 1rem;
+  margin-top: 4rem;
   border-radius: 0 20px 20px 0;
   padding: 2rem 0;
-
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
 
-  position: absolute;
+  position: fixed;
+
   width: ${(props) => (props.clicked ? "14rem" : "3.5rem")};
   transition: all 0.5s ease;
+  .active {
+    border: ${(props) => (props.clicked ? "none" : "2px solid #ffee10")};
+    border-right: ${(props) =>
+      props.clicked ? "4px solid #ffee10" : "2px solid #ffee10"};
+  }
 
   a {
     position: relative;
@@ -57,7 +64,7 @@ export const SidebarContainer = styled.div<SidebarContainerProps>`
       height: 100%;
       border-radius: ${(props) => (props.clicked ? "0px" : "50%")};
       background: ${(props) => (props.clicked ? "none" : "#ffee10")};
-      transition: 0.5s;
+      transition: 0.5s ease;
       transform: ${(props) => (props.clicked ? "none" : "scale(0.9)")};
       z-index: -1;
     }
@@ -70,6 +77,8 @@ export const SidebarContainer = styled.div<SidebarContainerProps>`
       box-shadow: ${(props) => (props.clicked ? "none" : " 0 0 10px #ffee10")};
       text-shadow: ${(props) => (props.clicked ? "none" : " 0 0 10px #ffee10")};
       border: ${(props) => (props.clicked ? "none" : "2px solid #ffee10")};
+      border-right: 2px solid #ffee10;
+      transition: 0.5s ease;
     }
 
     h5 {
@@ -85,10 +94,14 @@ export const NavButtonContainer = styled.div<SidebarContainerProps>`
   align-items: ${(props) => (props.clicked ? "center" : "")};
   border-radius: 0 20px 20px 0;
   transition: all 0.5s ease;
+  position: fixed;
 
   h4 {
     display: ${(props) => (props.clicked ? "inline" : "none")};
-    margin-left: 1em;
+    margin-left: 0.5em;
     color: #fff;
+    font-family: "Federant", cursive;
+    font-size: 26px;
+    overflow: hidden;
   }
 `;

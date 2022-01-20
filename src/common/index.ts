@@ -9,8 +9,21 @@ export {
   Container,
   SidebarContainer,
   NavButtonContainer,
+  PageContainer,
 } from "./styledComponents/Container.styled";
 export { Divider } from "./styledComponents/Divider.styled";
+export {
+  Heading1,
+  Heading2,
+  Heading3,
+  Link1,
+  Link2,
+  Link3,
+  Subtitle,
+  Caption,
+  ColoredText,
+} from "./styledComponents/Text";
+export { CardContainer } from "./styledComponents/Card.styled";
 
 //ui components
 export { default as Page } from "./uiComponents/Page";

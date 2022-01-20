@@ -1,9 +1,18 @@
 import React, { FC } from "react";
 
+import { PageContainer, RouteMotion } from "../../common";
+import CryptoList from "./CryptocurrenciesList";
+
 interface Props {}
 
 const Cryptocurrencies: FC = (props: Props) => {
-  return <div>Cryptocurrencies</div>;
+  return (
+    <RouteMotion>
+      <PageContainer>
+        <CryptoList />
+      </PageContainer>
+    </RouteMotion>
+  );
 };
 
 export default Cryptocurrencies;

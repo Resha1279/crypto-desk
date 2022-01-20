@@ -8,11 +8,10 @@ const Layout: FC<Props> = ({ children }) => {
   return (
     <div>
       <Sidebar />
-      <Row>
-        <div>sidebar</div>
-        {children}
-      </Row>
-      <footer>footer</footer>
+
+      {children}
+
+      {/* <footer>footer</footer> */}
     </div>
   );
 };

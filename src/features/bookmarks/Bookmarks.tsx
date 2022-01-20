@@ -1,13 +1,15 @@
 import React, { FC } from "react";
-import { Page } from "../../common";
+import { PageContainer, RouteMotion } from "../../common";
 
 interface Props {}
 
 const Bookmarks: FC = (props: Props) => {
   return (
-    <Page>
-      <h1>Bookmarks</h1>
-    </Page>
+    <RouteMotion>
+      <PageContainer>
+        <div>Bookmarks</div>
+      </PageContainer>
+    </RouteMotion>
   );
 };
 
