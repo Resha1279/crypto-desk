@@ -72,7 +72,7 @@ const CryptoList: FC<Props> = ({ simplified }) => {
                     <img src={crypto.iconUrl} alt="icon" />
                   </Row>
                   <Divider />
-                  <p>Price: ${millify(crypto.price)}</p>
+                  <p>Price: $ {millify(crypto.price)}</p>
                   <p>BTC: {millify(crypto.btcPrice)} BTC</p>
                   <p>Market Cap: {millify(crypto.marketCap)}</p>
                   <p>Daily Change: {millify(crypto.change)}%</p>

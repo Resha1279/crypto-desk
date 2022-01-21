@@ -2,7 +2,10 @@ import React, { FC, useState } from "react";
 import HTMLReactParser from "html-react-parser";
 import { useParams } from "react-router-dom";
 import millify from "millify";
-import { useGetCryptoDetailsQuery } from "../../services/cryptoApi";
+import {
+  useGetCryptoDetailsQuery,
+  useGetCryptoHistoryQuery,
+} from "../../services/cryptoApi";
 import {
   AiOutlineDollarCircle,
   AiOutlineThunderbolt,
@@ -25,6 +28,8 @@ import {
   Row,
 } from "../../common";
 import { is } from "immer/dist/internal";
+import CryptoChart from "./CryptoChart";
+import { CoinHistory } from "./type";
 
 interface Props {}
 
@@ -66,6 +71,16 @@ const CryptoDetails: FC = (props: Props) => {
 
   const time = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
   const [timePeriod, setTimePeriod] = useState(time[2]);
+
+  const { data: coinData, isFetching: isFetchingHistory } =
+    useGetCryptoHistoryQuery({
+      coinId,
+      timePeriod,
+    });
+
+  const coinHistory: CoinHistory = coinData?.data;
+
+  console.log("coinHistory:", coinHistory);
 
   const stats = isFetching
     ? []
@@ -121,7 +136,9 @@ const CryptoDetails: FC = (props: Props) => {
         },
         {
           title: "Total Supply",
-          value: `$ ${millify(cryptoDetails.supply.total)}`,
+          value: cryptoDetails.supply.total
+            ? `$ ${millify(cryptoDetails.supply.total)}`
+            : "unavailable",
           icon: <AiOutlineExclamationCircle />,
         },
         {
@@ -131,7 +148,7 @@ const CryptoDetails: FC = (props: Props) => {
         },
       ];
 
-  if (isFetching) {
+  if (isFetching || isFetchingHistory) {
     return <p>Loading..</p>;
   }
 
@@ -156,7 +173,11 @@ const CryptoDetails: FC = (props: Props) => {
           ))}
         </select>
 
-        {/* {line chart} */}
+        <CryptoChart
+          coinHistory={coinHistory}
+          coinName={cryptoDetails.name}
+          currentPrice={millify(cryptoDetails.price)}
+        />
         <Heading2>{cryptoDetails.name} value statistics</Heading2>
         <p>An overview showing stats of {cryptoDetails.name}</p>
         {stats.map(({ icon, title, value }) => (
@@ -194,7 +215,7 @@ const CryptoDetails: FC = (props: Props) => {
 
         {cryptoDetails.links.map((link) => (
           <div key={link.name}>
-            <ColoredText>{link.name}</ColoredText>
+            <ColoredText>{link.type}</ColoredText>
             <a href={link.url} target="_blank" rel="noreferrer">
               {link.name}
             </a>
