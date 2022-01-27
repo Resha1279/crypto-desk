@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Container, Divider } from "..";
+import { Divider } from "../../style/common.styled";
 import { AiFillHome, AiFillFund, AiFillHeart } from "react-icons/ai";
 import {
   BsCurrencyExchange,
   BsFillBookmarksFill,
   BsFilePost,
 } from "react-icons/bs";
-import { BiNews } from "react-icons/bi";
+import { BiNews, BiMenu } from "react-icons/bi";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 interface Props {}
 
@@ -16,10 +17,20 @@ const Sidebar = (props: Props) => {
   const [click, setClick] = useState(true);
   const handleClick = () => setClick(!click);
   return (
-    <Container absolute>
+    <div>
       <NavButtonContainer clicked={click}>
-        <NavButton clicked={click} onClick={() => handleClick()} />
-        <h4>¢ryptodesk</h4>
+        <NavButton
+          clicked={click}
+          onClick={() => handleClick()}
+          whileHover={{
+            scale: 1.1,
+            transition: { duration: 0.2 },
+          }}
+          whileTap={{ scale: 0.6 }}
+        >
+          <BiMenu />
+        </NavButton>
+        <h6>¢ryptodesk</h6>
       </NavButtonContainer>
       <SidebarContainer clicked={click}>
         <NavLink to="/" onClick={() => setClick(false)}>
@@ -53,15 +64,11 @@ const Sidebar = (props: Props) => {
           {click ? <h5>Favourites</h5> : ""}
         </NavLink>
       </SidebarContainer>
-    </Container>
+    </div>
   );
 };
 
 export default Sidebar;
-
-type ContainerProps = {
-  absolute?: boolean;
-};
 
 type SidebarContainerProps = {
   clicked: boolean;
@@ -149,63 +156,43 @@ const SidebarContainer = styled.div<SidebarContainerProps>`
 
 const NavButtonContainer = styled.div<SidebarContainerProps>`
   width: ${(props) => (props.clicked ? "15rem" : "0px")};
+  height: 3.6rem;
   background-color: var(--bg-secondary-dark);
   display: ${(props) => (props.clicked ? "flex" : "")};
-  align-items: ${(props) => (props.clicked ? "center" : "")};
+  align-items: center;
   border-radius: 0 20px 20px 0;
   transition: 0.5s ease;
   position: fixed;
 
-  h4 {
+  h6 {
     display: ${(props) => (props.clicked ? "inline" : "none")};
-    margin-left: 0.5em;
+    margin-bottom: 0.1em;
+    margin-left: 2.5em;
     color: var(--white);
     font-family: "Federant", cursive;
-    font-size: 26px;
+    font-size: 24px;
     overflow: hidden;
   }
 `;
 
-const NavButton = styled.button<ButtonProps>`
+const NavButton = styled(motion.button)<ButtonProps>`
   background-color: ${(props) =>
     props.clicked ? "var(--primary)" : "var(--bg-secondary-dark)"};
   border: 1px solid var(--bg-secondary-dark);
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
-  margin: 0.5rem 0 0.5rem 0.5rem;
+  margin: 0.5rem 0 0.1rem 0.5rem;
   cursor: pointer;
+  color: ${(props) =>
+    props.clicked ? "var(--bg-secondary-dark)" : "var(--white)"};
+  padding: 0;
+  font-size: x-large;
+  position: absolute;
+  top: 1px;
 
   display: flex;
   justify-content: center;
   align-items: center;
   transition: 0.2s;
-  position: relative;
-
-  &::before,
-  &::after {
-    content: "";
-    background-color: ${(props) =>
-      props.clicked ? "var(--black)" : "var(--white)"};
-    height: 2px;
-    width: 1rem;
-    position: absolute;
-    transition: all 0.3s ease;
-  }
-
-  &::before {
-    top: ${(props) => (props.clicked ? "1.5" : "0.9rem")};
-    transform: ${(props) => (props.clicked ? "rotate(135deg)" : "rotate(0)")};
-  }
-
-  &::after {
-    top: ${(props) => (props.clicked ? "1.2" : "1.4rem")};
-    transform: ${(props) => (props.clicked ? "rotate(-135deg)" : "rotate(0)")};
-  }
-
-  &:hover {
-    border-color: var(--primary);
-    box-shadow: 0 0 10px var(--primary);
-    text-shadow: 0 0 10px var(--primary);
-  }
 `;
