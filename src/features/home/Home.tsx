@@ -1,19 +1,11 @@
 import React, { FC } from "react";
-import {
-  Column,
-  Heading1,
-  PageContainer,
-  RouteMotion,
-  Row,
-  Subtitle,
-  ColoredText,
-  Link1,
-} from "../../common";
+import { PageContainer, RouteMotion, Row, Link1 } from "../../common";
 import { useGetCryptosQuery } from "../../services/cryptoApi";
 import { millify } from "millify";
 import CryptoList from "../cryptocurrencies/CryptocurrenciesList";
 import NewsList from "../news/NewsList";
 import { NavLink } from "react-router-dom";
+import { CryptoStatsContainer, Stats, SectionHeader } from "./Home.styled";
 
 interface Props {}
 
@@ -38,47 +30,49 @@ const Home: FC = (props: Props) => {
   return (
     <RouteMotion>
       <PageContainer>
-        <Heading1>Global Crypto Stats</Heading1>
-        <Row>
-          <Column width="400px">
-            <ColoredText>Total Cryptocurrencies</ColoredText>
-            <Subtitle>{globalStats.total}</Subtitle>
-          </Column>
-          <Column width="400px">
-            <ColoredText>Total Exchanges</ColoredText>
-            <Subtitle>{millify(globalStats.totalExchanges)}</Subtitle>
-          </Column>
-        </Row>
-        <Row>
-          <Column width="400px">
-            <ColoredText>Total Market Cap</ColoredText>
-            <Subtitle>{millify(globalStats.totalMarketCap)}</Subtitle>
-          </Column>
-          <Column width="400px">
-            <ColoredText>Total 24h Volume</ColoredText>
-            <Subtitle>{millify(globalStats.total24hVolume)}</Subtitle>
-          </Column>
-        </Row>
-        <Row>
-          <Column width="400px">
-            <ColoredText>Total Markets</ColoredText>
-            <Subtitle>{millify(globalStats.totalMarkets)}</Subtitle>
-          </Column>
-        </Row>
+        <h1>Global Crypto Stats</h1>
 
-        <Row spaceBetween>
-          <Heading1>Top 10 Cryptocurrencies in the World</Heading1>
+        <CryptoStatsContainer>
+          <div>
+            <h3>Total Cryptocurrencies</h3>
+            <Stats>{globalStats.total}</Stats>
+          </div>
+          <div>
+            <h3>Total Exchanges</h3>
+            <Stats>{millify(globalStats.totalExchanges)}</Stats>
+          </div>
+          <div>
+            <h3>Total Market Cap</h3>
+            <Stats>{millify(globalStats.totalMarketCap)}</Stats>
+          </div>
+          <div>
+            <h3>Total 24h Volume</h3>
+            <Stats>{millify(globalStats.total24hVolume)}</Stats>
+          </div>
+          <div>
+            <h3>Total Markets</h3>
+            <Stats>{millify(globalStats.totalMarkets)}</Stats>
+          </div>
+        </CryptoStatsContainer>
+
+        <SectionHeader>
+          <h1>Top Cryptocurrencies in the World</h1>
           <NavLink to="/cryptocurrencies">
-            <Link1>Show More</Link1>
+            <button>
+              <h5>Show more</h5>
+            </button>
           </NavLink>
-        </Row>
+        </SectionHeader>
+
         <CryptoList simplified />
-        <Row spaceBetween>
-          <Heading1>Latest Crypto News </Heading1>
+        <SectionHeader>
+          <h1>Latest Crypto News </h1>
           <NavLink to="/news">
-            <Link1>Show More</Link1>
+            <button>
+              <h5>Show more</h5>
+            </button>
           </NavLink>
-        </Row>
+        </SectionHeader>
         <NewsList simplified />
       </PageContainer>
     </RouteMotion>

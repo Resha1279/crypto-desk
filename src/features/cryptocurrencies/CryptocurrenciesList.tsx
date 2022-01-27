@@ -1,8 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { CardContainer, Divider, Heading3, Row } from "../../common";
 import { useGetCryptosQuery } from "../../services/cryptoApi";
 import { millify } from "millify";
+import styled from "styled-components";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { motion } from "framer-motion";
 
 interface Props {
   simplified?: boolean;
@@ -28,12 +30,14 @@ export interface Cryptos {
 }
 
 const CryptoList: FC<Props> = ({ simplified }) => {
-  const count: number = simplified ? 10 : 100;
+  const count: number = simplified ? 12 : 100;
 
   const { data: cryptosList, isFetching } = useGetCryptosQuery(count);
 
   const [cryptos, setCryptos] = useState<Cryptos[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [favList, setFavList] = useState<string[]>([]);
 
   useEffect(() => {
     const filteredData: Cryptos[] = cryptosList?.data?.coins.filter(
@@ -42,6 +46,10 @@ const CryptoList: FC<Props> = ({ simplified }) => {
     );
     setCryptos(filteredData);
   }, [cryptosList, searchTerm]);
+
+  useEffect(() => {
+    console.log("fav::", favList);
+  }, [favList]);
 
   if (isFetching) {
     return <p>Loading..</p>;
@@ -59,30 +67,122 @@ const CryptoList: FC<Props> = ({ simplified }) => {
           />
         </div>
       )}
-      <div>
-        <Row gap={20}>
-          {!isFetching &&
-            cryptos?.map((crypto: Cryptos) => (
-              <NavLink key={crypto.uuid} to={`/crypto/${crypto.uuid}`}>
-                <CardContainer>
-                  <Row spaceBetween>
-                    <Heading3>
-                      {crypto.rank}.&nbsp;&nbsp;{crypto.name}
-                    </Heading3>
-                    <img src={crypto.iconUrl} alt="icon" />
-                  </Row>
-                  <Divider />
-                  <p>Price: $ {millify(crypto.price)}</p>
+      <CardContainer>
+        {!isFetching &&
+          cryptos?.map((crypto: Cryptos) => (
+            <NavLink key={crypto.uuid} to={`/crypto/${crypto.uuid}`}>
+              <Card color={crypto.color === null ? "blue" : crypto.color}>
+                <h5>
+                  {crypto.name} ({crypto.symbol})
+                </h5>
+                <CoinLogo src={crypto.iconUrl} alt="icon" />
+
+                <IconButton
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (favList.includes(crypto.uuid)) {
+                    } else {
+                      setFavList([...favList, crypto.uuid]);
+                    }
+                  }}
+                >
+                  {favList.includes(crypto.uuid) ? (
+                    <AiFillHeart />
+                  ) : (
+                    <HeartOutlined />
+                  )}
+                </IconButton>
+                <CardContent>
+                  <p>Price: &#36;{millify(crypto.price)}</p>
                   <p>BTC: {millify(crypto.btcPrice)} BTC</p>
                   <p>Market Cap: {millify(crypto.marketCap)}</p>
                   <p>Daily Change: {millify(crypto.change)}%</p>
-                </CardContainer>
-              </NavLink>
-            ))}
-        </Row>
-      </div>
+                  <Rank>#{crypto.rank}</Rank>
+                </CardContent>
+              </Card>
+            </NavLink>
+          ))}
+      </CardContainer>
     </div>
   );
 };
 
 export default CryptoList;
+
+type CardProps = {
+  color: string;
+};
+
+const CardContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3em;
+
+  a {
+    flex: 1 0 10%; /* explanation below */
+    min-width: 300px;
+    max-width: 400px;
+  }
+`;
+
+const Card = styled.div<CardProps>`
+  background-color: var(--bg-secondary-dark);
+  padding: 1.5em;
+  border: 1px solid;
+  border-color: ${({ color }) => color};
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.5s ease;
+  position: relative;
+
+  &:hover {
+    color: #fff;
+    box-shadow: ${({ color }) => `0 0 2px #fff, 0 0 10px #fff, 0 0 20px ${color}
+      `};
+  }
+
+  h5 {
+    max-width: 200px;
+  }
+`;
+
+const CoinLogo = styled.img`
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  position: absolute;
+  top: -25px;
+  right: 14px;
+  background-color: var(--white);
+  padding: 8px;
+`;
+
+const IconButton = styled(motion.div)`
+  font-size: 28px;
+  position: absolute;
+  right: 24px;
+  top: 30px;
+  padding: 2px;
+  width: 30px;
+  height: 30px;
+`;
+
+const CardContent = styled.div`
+  padding: 20px;
+  opacity: 0.6;
+`;
+
+const Rank = styled.p`
+  position: absolute;
+  color: var(--text-secondary-white);
+  right: 10px;
+  bottom: 0px;
+  font-size: 60px;
+  opacity: 0.5;
+`;
+
+const HeartOutlined = styled(AiOutlineHeart)`
+  color: var(--text-secondary-white);
+  opacity: 0.5;
+`;

@@ -27,7 +27,7 @@ import {
   RouteMotion,
   Row,
 } from "../../common";
-import { is } from "immer/dist/internal";
+
 import CryptoChart from "./CryptoChart";
 import { CoinHistory } from "./type";
 

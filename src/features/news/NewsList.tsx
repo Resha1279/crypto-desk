@@ -1,9 +1,10 @@
 import React, { FC, useState } from "react";
 import { useGetCryptoNewsQuery } from "../../services/cryptoNewsApi";
-import { Caption, CardContainer, Heading2, Row } from "../../common";
+import { Row } from "../../common";
 import moment from "moment";
 import { useGetCryptosQuery } from "../../services/cryptoApi";
 import { Cryptos } from "../cryptocurrencies/CryptocurrenciesList";
+import styled from "styled-components";
 
 interface Props {
   simplified?: boolean;
@@ -65,51 +66,106 @@ const NewsList: FC<Props> = ({ simplified }) => {
 
   return (
     <div>
-      <Row gap={20}>
-        {simplified || (
-          <div>
-            <select
-              onChange={(e) => {
-                setNewsCategory(e.target.value);
-              }}
-            >
-              <option value="Cryptocurrency">Cryptocurrency</option>
-              {cryptocurrency?.data?.coins.map((coin: Cryptos) => (
-                <option value={coin.name}>{coin.name}</option>
-              ))}
-              s
-            </select>
-          </div>
-        )}
+      {simplified || (
+        <div>
+          <select
+            onChange={(e) => {
+              setNewsCategory(e.target.value);
+            }}
+          >
+            <option value="Cryptocurrency">Cryptocurrency</option>
+            {cryptocurrency?.data?.coins.map((coin: Cryptos) => (
+              <option value={coin.name}>{coin.name}</option>
+            ))}
+            s
+          </select>
+        </div>
+      )}
+      <CardContainer>
         {isFetching ? (
           <p>Loading...</p>
         ) : (
           cryptoNews?.value?.map((news: CryptoNews, index: number) => (
-            <a key={index} href={news.url} target="_blank" rel="noreferrer">
-              <CardContainer>
-                <img
-                  src={news.image?.thumbnail?.contentUrl || placeholderImage}
-                  alt="news"
-                />
-                <Heading2>{news.name}</Heading2>
-                <Caption>{news.description}</Caption>
-                <Row>
-                  <img
+            <Card key={index}>
+              <a href={news.url} target="_blank" rel="noreferrer">
+                <TitleContainer>
+                  <ContentImage
+                    src={news.image?.thumbnail?.contentUrl || placeholderImage}
+                    alt="news"
+                  />
+                  <h2>{news.name}</h2>
+                </TitleContainer>
+                <Description>{news.description}</Description>
+                <SourceContainer>
+                  <SourceImage
                     src={
                       news.provider[0]?.image?.thumbnail?.contentUrl ||
                       placeholderImage
                     }
                     alt="newssource"
                   />
-                  <Caption>{moment(news.datePublished).fromNow()}</Caption>
-                </Row>
-              </CardContainer>
-            </a>
+                  <span>{news.provider[0].name}</span>
+                  &nbsp;&#8226;&nbsp;
+                  <span>{moment(news.datePublished).fromNow()}</span>
+                </SourceContainer>
+              </a>
+            </Card>
           ))
         )}
-      </Row>
+      </CardContainer>
     </div>
   );
 };
 
 export default NewsList;
+
+const CardContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+`;
+
+const Card = styled.div`
+  border: 0.5px solid #fff;
+  min-width: 400px;
+
+  padding: 1em;
+  min-height: 360px;
+  flex: 1;
+  transition: all 0.5s ease;
+
+  &:hover {
+    box-shadow: 0 0 2px var(--white), 0 0 10px var(--white);
+  }
+`;
+
+const TitleContainer = styled.div`
+  display: flex;
+  gap: 30px;
+`;
+
+const ContentImage = styled.img`
+  width: 100px;
+  height: 100px;
+`;
+
+const SourceContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const SourceImage = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--white);
+  object-fit: cover;
+  padding: 2px;
+  margin-right: 1em;
+`;
+
+const Description = styled.div`
+  text-align: justify;
+  padding: 2em 0;
+  color: var(--dull);
+`;

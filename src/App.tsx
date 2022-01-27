@@ -13,107 +13,111 @@ import {
   Feeds,
 } from "./helpers/lazyRoutes";
 import { AnimatePresence } from "framer-motion";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./style/theme";
 
 const App: FC = () => {
   return (
     <>
-      <GlobalStyles />
-      <AnimatePresence exitBeforeEnter>
-        <Layout>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Page>
-                  <Suspense fallback={<Fallback />}>
-                    <Home />
-                  </Suspense>
-                </Page>
-              }
-            />
-            <Route
-              path="/cryptocurrencies"
-              element={
-                <Page>
-                  <Suspense fallback={<Fallback />}>
-                    <Cryptocurrencies />
-                  </Suspense>
-                </Page>
-              }
-            />
-            <Route
-              path="/exchanges"
-              element={
-                <Page>
-                  <Suspense fallback={<Fallback />}>
-                    <Exchanges />
-                  </Suspense>
-                </Page>
-              }
-            />
-            <Route
-              path="/crypto/:coinId"
-              element={
-                <Page>
-                  <Suspense fallback={<Fallback />}>
-                    <CryptoDetails />
-                  </Suspense>
-                </Page>
-              }
-            />
-            <Route
-              path="/news"
-              element={
-                <Page>
-                  <Suspense fallback={<Fallback />}>
-                    <News />
-                  </Suspense>
-                </Page>
-              }
-            />
-            <Route
-              path="/favourites"
-              element={
-                <Page>
-                  <Suspense fallback={<Fallback />}>
-                    <Favourites />
-                  </Suspense>
-                </Page>
-              }
-            />
-            <Route
-              path="/bookmarks"
-              element={
-                <Page>
-                  <Suspense fallback={<Fallback />}>
-                    <Bookmarks />
-                  </Suspense>
-                </Page>
-              }
-            />
-            <Route
-              path="/feed"
-              element={
-                <Page>
-                  <Suspense fallback={<Fallback />}>
-                    <Feeds />
-                  </Suspense>
-                </Page>
-              }
-            />
-            <Route
-              path="*"
-              element={
-                <Page>
-                  <Suspense fallback={<Fallback />}>
-                    <NotFoundPage />
-                  </Suspense>
-                </Page>
-              }
-            />
-          </Routes>
-        </Layout>
-      </AnimatePresence>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <AnimatePresence exitBeforeEnter>
+          <Layout>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Page>
+                    <Suspense fallback={<Fallback />}>
+                      <Home />
+                    </Suspense>
+                  </Page>
+                }
+              />
+              <Route
+                path="/cryptocurrencies"
+                element={
+                  <Page>
+                    <Suspense fallback={<Fallback />}>
+                      <Cryptocurrencies />
+                    </Suspense>
+                  </Page>
+                }
+              />
+              <Route
+                path="/exchanges"
+                element={
+                  <Page>
+                    <Suspense fallback={<Fallback />}>
+                      <Exchanges />
+                    </Suspense>
+                  </Page>
+                }
+              />
+              <Route
+                path="/crypto/:coinId"
+                element={
+                  <Page>
+                    <Suspense fallback={<Fallback />}>
+                      <CryptoDetails />
+                    </Suspense>
+                  </Page>
+                }
+              />
+              <Route
+                path="/news"
+                element={
+                  <Page>
+                    <Suspense fallback={<Fallback />}>
+                      <News />
+                    </Suspense>
+                  </Page>
+                }
+              />
+              <Route
+                path="/favourites"
+                element={
+                  <Page>
+                    <Suspense fallback={<Fallback />}>
+                      <Favourites />
+                    </Suspense>
+                  </Page>
+                }
+              />
+              <Route
+                path="/bookmarks"
+                element={
+                  <Page>
+                    <Suspense fallback={<Fallback />}>
+                      <Bookmarks />
+                    </Suspense>
+                  </Page>
+                }
+              />
+              <Route
+                path="/feed"
+                element={
+                  <Page>
+                    <Suspense fallback={<Fallback />}>
+                      <Feeds />
+                    </Suspense>
+                  </Page>
+                }
+              />
+              <Route
+                path="*"
+                element={
+                  <Page>
+                    <Suspense fallback={<Fallback />}>
+                      <NotFoundPage />
+                    </Suspense>
+                  </Page>
+                }
+              />
+            </Routes>
+          </Layout>
+        </AnimatePresence>
+      </ThemeProvider>
     </>
   );
 };

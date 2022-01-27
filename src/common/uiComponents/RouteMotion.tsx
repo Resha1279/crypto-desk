@@ -6,14 +6,14 @@ interface Props {}
 const RouteMotion: FC<Props> = ({ children }) => {
   return (
     <motion.div
-      initial={{ y: 500 }}
+      initial={{ y: 50 }}
       animate={{
         y: 0,
-        transition: { duration: 0.5, type: "spring" },
+        transition: { duration: 0.8, type: "spring" },
       }}
       exit={{
         y: -500,
-        transition: { duration: 0.5, type: "tween", ease: "easeInOut" },
+        transition: { duration: 0.8, type: "fade" },
       }}
     >
       {children}
