@@ -86,9 +86,14 @@ const CryptoList: FC<Props> = ({ simplified }) => {
                       setFavList([...favList, crypto.uuid]);
                     }
                   }}
+                  whileHover={{
+                    scale: 1.1,
+                    transition: { duration: 0.2 },
+                  }}
+                  whileTap={{ scale: 0.6 }}
                 >
                   {favList.includes(crypto.uuid) ? (
-                    <AiFillHeart />
+                    <AiFillHeart color="red" />
                   ) : (
                     <HeartOutlined />
                   )}
@@ -166,6 +171,7 @@ const IconButton = styled(motion.div)`
   padding: 2px;
   width: 30px;
   height: 30px;
+  overflow: hidden;
 `;
 
 const CardContent = styled.div`
