@@ -1,11 +1,16 @@
 import React, { FC } from "react";
-import { PageContainer, RouteMotion, Row, Link1 } from "../../common";
+import { PageContainer, RouteMotion } from "../../common";
 import { useGetCryptosQuery } from "../../services/cryptoApi";
 import { millify } from "millify";
 import CryptoList from "../cryptocurrencies/CryptocurrenciesList";
 import NewsList from "../news/NewsList";
 import { NavLink } from "react-router-dom";
-import { CryptoStatsContainer, Stats, SectionHeader } from "./Home.styled";
+import {
+  CryptoStatsContainer,
+  Stats,
+  SectionHeader,
+  StatsCard,
+} from "./Home.styled";
 
 interface Props {}
 
@@ -33,26 +38,26 @@ const Home: FC = (props: Props) => {
         <h1>Global Crypto Stats</h1>
 
         <CryptoStatsContainer>
-          <div>
+          <StatsCard>
             <h3>Total Cryptocurrencies</h3>
             <Stats>{globalStats.total}</Stats>
-          </div>
-          <div>
+          </StatsCard>
+          <StatsCard>
             <h3>Total Exchanges</h3>
             <Stats>{millify(globalStats.totalExchanges)}</Stats>
-          </div>
-          <div>
+          </StatsCard>
+          <StatsCard>
             <h3>Total Market Cap</h3>
             <Stats>{millify(globalStats.totalMarketCap)}</Stats>
-          </div>
-          <div>
+          </StatsCard>
+          <StatsCard>
             <h3>Total 24h Volume</h3>
             <Stats>{millify(globalStats.total24hVolume)}</Stats>
-          </div>
-          <div>
+          </StatsCard>
+          <StatsCard>
             <h3>Total Markets</h3>
             <Stats>{millify(globalStats.totalMarkets)}</Stats>
-          </div>
+          </StatsCard>
         </CryptoStatsContainer>
 
         <SectionHeader>
