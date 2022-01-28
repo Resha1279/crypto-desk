@@ -43,7 +43,8 @@ const CryptoList: FC<Props> = ({ simplified }) => {
   useEffect(() => {
     const filteredData: Cryptos[] = cryptosList?.data?.coins.filter(
       (coin: Cryptos) =>
-        coin.name.toLowerCase().includes(searchTerm.toLowerCase())
+        coin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        coin.symbol.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setCryptos(filteredData);
   }, [cryptosList, searchTerm]);
