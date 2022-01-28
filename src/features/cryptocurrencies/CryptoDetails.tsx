@@ -17,16 +17,11 @@ import {
   AiOutlineStop,
   AiOutlineCheck,
 } from "react-icons/ai";
-import {
-  ColoredText,
-  Divider,
-  Heading1,
-  Heading2,
-  Heading3,
-  PageContainer,
-  RouteMotion,
-  Row,
-} from "../../common";
+import { ColoredText, PageContainer, RouteMotion } from "../../common";
+import styled from "styled-components";
+
+import { Row } from "../../style/common.styled";
+import { motion } from "framer-motion";
 
 import CryptoChart from "./CryptoChart";
 import { CoinHistory } from "./type";
@@ -155,63 +150,66 @@ const CryptoDetails: FC = (props: Props) => {
   return (
     <RouteMotion>
       <PageContainer>
-        <Heading1>{cryptoDetails.name} </Heading1>
-        <p>
-          {cryptoDetails.name} live price in Us Dollars. View value statistics,
-          market cap and supply.
-        </p>
-        <select
-          defaultValue={timePeriod}
-          onChange={(e) => {
-            setTimePeriod(e.target.value);
-          }}
-        >
-          {time.map((date) => (
-            <option key={date} value={date}>
-              {date}
-            </option>
-          ))}
-        </select>
+        <Row spaceBetween align="end">
+          <div>
+            <h1>{cryptoDetails.name} </h1>
+            <p>
+              {cryptoDetails.name} live price in Us Dollars. View value
+              statistics, market cap and supply.
+            </p>
+          </div>
+          <Select
+            defaultValue={timePeriod}
+            onChange={(e) => {
+              setTimePeriod(e.target.value);
+            }}
+          >
+            {time.map((date) => (
+              <option key={date} value={date}>
+                {date}
+              </option>
+            ))}
+          </Select>
+        </Row>
 
         <CryptoChart
           coinHistory={coinHistory}
           coinName={cryptoDetails.name}
+          coinColor={cryptoDetails.color || "#0071bd"}
           currentPrice={millify(cryptoDetails.price)}
         />
-        <Heading2>{cryptoDetails.name} value statistics</Heading2>
-        <p>An overview showing stats of {cryptoDetails.name}</p>
-        {stats.map(({ icon, title, value }) => (
-          <div key={title}>
-            <Row spaceBetween width={600}>
-              <Row gap={10} width={300}>
-                <ColoredText>{icon}</ColoredText>
-                <Heading3>{title}</Heading3>
-              </Row>
-              <ColoredText>{value}</ColoredText>
-            </Row>
-            <Divider />
-          </div>
-        ))}
-        <Heading2>Other Statistics</Heading2>
 
-        {genericStats.map(({ icon, title, value }) => (
-          <div key={title}>
-            <Row spaceBetween width={600}>
-              <Row gap={10} width={300}>
-                <ColoredText>{icon}</ColoredText>
-                <Heading3>{title}</Heading3>
-              </Row>
-              <ColoredText>{value}</ColoredText>
-            </Row>
-            <Divider />
-          </div>
-        ))}
+        <div>
+          <h2>{cryptoDetails.name} value statistics</h2>
+          <Row gap={20}>
+            {stats.map(({ icon, title, value }) => (
+              <Card key={title}>
+                <Icon color={cryptoDetails.color}>
+                  <h1>{icon}</h1>
+                </Icon>
+                <h3>{title}</h3>
 
-        <Heading1>What is {cryptoDetails.name}?</Heading1>
+                <h1>{value}</h1>
+              </Card>
+            ))}
+            {genericStats.map(({ icon, title, value }) => (
+              <Card key={title}>
+                <Icon color={cryptoDetails.color}>
+                  <h1>{icon}</h1>
+                </Icon>
+                <h3>{title}</h3>
+
+                <h1>{value}</h1>
+              </Card>
+            ))}
+          </Row>
+        </div>
+
+        <h1>What is {cryptoDetails.name}?</h1>
 
         {HTMLReactParser(cryptoDetails.description)}
 
-        <Heading1>{cryptoDetails.name} Links</Heading1>
+        <h1>{cryptoDetails.name} Links</h1>
 
         {cryptoDetails.links.map((link) => (
           <div key={link.name}>
@@ -227,3 +225,37 @@ const CryptoDetails: FC = (props: Props) => {
 };
 
 export default CryptoDetails;
+
+type CardProps = {
+  color: string;
+};
+
+const Select = styled(motion.select)`
+  width: 150px;
+  padding: 1em;
+  border-radius: 10px;
+  background-color: var(--bg-secondary-dark);
+  color: var(--text-secondary-white);
+`;
+
+const Card = styled.div`
+  border: 1px solid var(--dull);
+  padding: 1em 1em 1em 5.5em;
+  width: 250px;
+  border-radius: 0.5em;
+  position: relative;
+
+  h3 {
+    font-size: small;
+  }
+`;
+
+const Icon = styled.div<CardProps>`
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  padding: 1em;
+  background-color: ${({ color }) => color || "#0071bd"};
+  border-radius: 4px;
+  font-weight: 900;
+`;

@@ -75,7 +75,7 @@ text-transform: uppercase;
 
 a{
   text-decoration: none;
-  font-size: --text-medium;
+  
 color: var(--text-primary-white);
 }
 
@@ -83,14 +83,14 @@ color: var(--text-primary-white);
 
 
 p{
-  font-size: --text-medium;
-color: var(--white);
+
+color: var(--text-secondary-white);
   
     line-height: 1.5;
 }
 
 span{
-  font-size: --text-small;
+ font-size:  var(--text-small);
 
 color: var(--dull);
 }

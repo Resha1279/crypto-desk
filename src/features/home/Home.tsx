@@ -39,23 +39,23 @@ const Home: FC = (props: Props) => {
 
         <CryptoStatsContainer>
           <StatsCard>
-            <h3>Total Cryptocurrencies</h3>
+            <h3>Cryptocurrencies</h3>
             <Stats>{globalStats.total}</Stats>
           </StatsCard>
           <StatsCard>
-            <h3>Total Exchanges</h3>
+            <h3>Exchanges</h3>
             <Stats>{millify(globalStats.totalExchanges)}</Stats>
           </StatsCard>
           <StatsCard>
-            <h3>Total Market Cap</h3>
+            <h3>Market Cap</h3>
             <Stats>{millify(globalStats.totalMarketCap)}</Stats>
           </StatsCard>
           <StatsCard>
-            <h3>Total 24h Volume</h3>
+            <h3>24h Volume</h3>
             <Stats>{millify(globalStats.total24hVolume)}</Stats>
           </StatsCard>
           <StatsCard>
-            <h3>Total Markets</h3>
+            <h3>Markets</h3>
             <Stats>{millify(globalStats.totalMarkets)}</Stats>
           </StatsCard>
         </CryptoStatsContainer>

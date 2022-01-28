@@ -26,13 +26,15 @@ import {
   Tooltip,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { Heading1, Heading2, Row } from "../../common";
 import { CoinHistory } from "./type";
+import styled from "styled-components";
+import { motion } from "framer-motion";
 
 interface Props {
   coinHistory: CoinHistory;
   currentPrice: string;
   coinName: string;
+  coinColor: string;
 }
 
 Chart.register(
@@ -61,14 +63,19 @@ Chart.register(
   Tooltip
 );
 
-const CryptoChart: FC<Props> = ({ coinHistory, currentPrice, coinName }) => {
+const CryptoChart: FC<Props> = ({
+  coinHistory,
+  currentPrice,
+  coinName,
+  coinColor,
+}) => {
   const coinPrice = [];
   const coinTimestamp = [];
 
   for (let i = 0; i < coinHistory?.history?.length; i += 1) {
     coinPrice.push(coinHistory?.history[i].price);
     coinTimestamp.push(
-      new Date(coinHistory?.history[i].timestamp).toLocaleDateString()
+      new Date(coinHistory?.history[i].timestamp).toDateString()
     );
   }
 
@@ -79,8 +86,8 @@ const CryptoChart: FC<Props> = ({ coinHistory, currentPrice, coinName }) => {
         label: "Price in USD",
         data: coinPrice,
         fill: false,
-        backgroundColor: "#0071bd",
-        borderColor: "#0071bd",
+        backgroundColor: coinColor,
+        borderColor: coinColor,
       },
     ],
   };
@@ -94,17 +101,46 @@ const CryptoChart: FC<Props> = ({ coinHistory, currentPrice, coinName }) => {
   };
 
   return (
-    <div>
-      <Heading1>{coinName} price chart</Heading1>
-      <Row spaceBetween>
-        <Heading2>{coinHistory?.change}%</Heading2>
-        <Heading2>
-          Current {coinName} price : $ {currentPrice}
-        </Heading2>
-      </Row>
+    <ChartContainer
+      initial={{ opacity: 0.5 }}
+      animate={{
+        opacity: 1,
+      }}
+    >
+      <ChartHeader color={coinColor}>
+        <h1>{coinName} price chart</h1>
+
+        <h4>
+          Current {coinName} price : $ {currentPrice} ({coinHistory?.change}%)
+        </h4>
+      </ChartHeader>
+
       <Line data={data} options={options} />
-    </div>
+    </ChartContainer>
   );
 };
 
 export default CryptoChart;
+
+type ChartHeaderProps = {
+  color: string;
+};
+
+const ChartContainer = styled(motion.div)`
+  background-color: var(--white);
+  padding: 2em;
+  border-radius: 2em;
+  margin: 2em 0;
+`;
+
+const ChartHeader = styled.div<ChartHeaderProps>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2em;
+
+  h1,
+  h4 {
+    color: ${({ color }) => color};
+  }
+`;

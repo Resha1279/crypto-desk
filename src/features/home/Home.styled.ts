@@ -2,23 +2,32 @@ import styled from "styled-components";
 
 export const CryptoStatsContainer = styled.div`
   display: flex;
-  //max-width: 400px;
+
   flex-wrap: wrap;
-  gap: 2em;
+  gap: 2.5em;
   margin-top: 2em;
+  margin-bottom: 8em;
 `;
 
 export const StatsCard = styled.div`
   border: 1px solid var(--dull);
-  border-radius: 1rem;
-  padding: 1em;
+  border-radius: 8px;
+  padding: 0.5em 0.5em 2.5em 0.5em;
+  position: relative;
+  width: 150px;
 `;
 
 export const Stats = styled.p`
-  font-size: 2em;
+  font-size: 2.5em;
 
-  min-width: 150px;
-  color: var(--primary);
+  width: 150px;
+  color: var(--white);
+  position: absolute;
+  background-color: #22a079;
+  bottom: -0.6em;
+  right: -0.6em;
+  text-align: center;
+  border-radius: 8px;
 `;
 
 export const SectionHeader = styled.div`
