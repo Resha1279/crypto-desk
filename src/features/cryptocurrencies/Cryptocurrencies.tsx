@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 
-import { PageContainer, RouteMotion } from "../../common";
+import { RouteMotion } from "../../common";
+import { PageContainer } from "../../style/common.styled";
 import CryptoList from "./CryptocurrenciesList";
 
 interface Props {}

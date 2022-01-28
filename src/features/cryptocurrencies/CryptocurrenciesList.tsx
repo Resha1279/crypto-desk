@@ -5,6 +5,7 @@ import { millify } from "millify";
 import styled from "styled-components";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { motion } from "framer-motion";
+import { Row, SectionContainer } from "../../style/common.styled";
 
 interface Props {
   simplified?: boolean;
@@ -57,58 +58,63 @@ const CryptoList: FC<Props> = ({ simplified }) => {
   return (
     <div>
       {simplified || (
-        <div>
-          <input
-            type="search"
-            placeholder="search.."
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-            }}
-          />
-        </div>
+        <SectionContainer>
+          <Row justify="end">
+            <Input
+              type="search"
+              placeholder="Search.."
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+            />
+          </Row>
+        </SectionContainer>
       )}
-      <CardContainer>
-        {!isFetching &&
-          cryptos?.map((crypto: Cryptos) => (
-            <NavLink key={crypto.uuid} to={`/crypto/${crypto.uuid}`}>
-              <Card color={crypto.color === null ? "blue" : crypto.color}>
-                <h5>
-                  {crypto.name} ({crypto.symbol})
-                </h5>
-                <CoinLogo src={crypto.iconUrl} alt="icon" />
 
-                <IconButton
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    if (favList.includes(crypto.uuid)) {
-                    } else {
-                      setFavList([...favList, crypto.uuid]);
-                    }
-                  }}
-                  whileHover={{
-                    scale: 1.1,
-                    transition: { duration: 0.2 },
-                  }}
-                  whileTap={{ scale: 0.6 }}
-                >
-                  {favList.includes(crypto.uuid) ? (
-                    <AiFillHeart color="red" />
-                  ) : (
-                    <HeartOutlined />
-                  )}
-                </IconButton>
-                <CardContent>
-                  <p>Price: &#36;{millify(crypto.price)}</p>
-                  <p>BTC: {millify(crypto.btcPrice)} BTC</p>
-                  <p>Market Cap: {millify(crypto.marketCap)}</p>
-                  <p>Daily Change: {millify(crypto.change)}%</p>
-                  <Rank>#{crypto.rank}</Rank>
-                </CardContent>
-              </Card>
-            </NavLink>
-          ))}
-      </CardContainer>
+      <SectionContainer>
+        <CardContainer>
+          {!isFetching &&
+            cryptos?.map((crypto: Cryptos) => (
+              <NavLink key={crypto.uuid} to={`/crypto/${crypto.uuid}`}>
+                <Card color={crypto.color === null ? "blue" : crypto.color}>
+                  <h5>
+                    {crypto.name} ({crypto.symbol})
+                  </h5>
+                  <CoinLogo src={crypto.iconUrl} alt="icon" />
+
+                  <IconButton
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      if (favList.includes(crypto.uuid)) {
+                      } else {
+                        setFavList([...favList, crypto.uuid]);
+                      }
+                    }}
+                    whileHover={{
+                      scale: 1.1,
+                      transition: { duration: 0.2 },
+                    }}
+                    whileTap={{ scale: 0.6 }}
+                  >
+                    {favList.includes(crypto.uuid) ? (
+                      <AiFillHeart color="red" />
+                    ) : (
+                      <HeartOutlined />
+                    )}
+                  </IconButton>
+                  <CardContent>
+                    <p>Price: &#36;{millify(crypto.price)}</p>
+                    <p>BTC: {millify(crypto.btcPrice)} BTC</p>
+                    <p>Market Cap: {millify(crypto.marketCap)}</p>
+                    <p>Daily Change: {millify(crypto.change)}%</p>
+                    <Rank>#{crypto.rank}</Rank>
+                  </CardContent>
+                </Card>
+              </NavLink>
+            ))}
+        </CardContainer>
+      </SectionContainer>
     </div>
   );
 };
@@ -191,4 +197,11 @@ const Rank = styled.p`
 const HeartOutlined = styled(AiOutlineHeart)`
   color: var(--text-secondary-white);
   opacity: 0.5;
+`;
+
+const Input = styled.input`
+  padding: 1em;
+  border-radius: 8px;
+  border: 1px solid var(--primary);
+  width: 250px;
 `;

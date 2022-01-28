@@ -10,61 +10,64 @@ import {
 import { BiNews, BiMenu } from "react-icons/bi";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import ClickAwayListener from "react-click-away-listener";
 
 interface Props {}
 
 const Sidebar = (props: Props) => {
-  const [click, setClick] = useState(true);
+  const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   return (
-    <div>
-      <NavButtonContainer clicked={click}>
-        <NavButton
-          clicked={click}
-          onClick={() => handleClick()}
-          whileHover={{
-            scale: 1.1,
-            transition: { duration: 0.2 },
-          }}
-          whileTap={{ scale: 0.6 }}
-        >
-          <BiMenu />
-        </NavButton>
-        <h6>¢ryptodesk</h6>
-      </NavButtonContainer>
-      <SidebarContainer clicked={click}>
-        <NavLink to="/" onClick={() => setClick(false)}>
-          <AiFillHome />
-          {click ? <h5>Home</h5> : ""}
-        </NavLink>
-        <NavLink to="/cryptocurrencies" onClick={() => setClick(false)}>
-          <AiFillFund />
-          {click ? <h5>Cryptocurrencies</h5> : ""}
-        </NavLink>
-        <NavLink to="/exchanges" onClick={() => setClick(false)}>
-          <BsCurrencyExchange />
-          {click ? <h5>Exchanges</h5> : ""}
-        </NavLink>
-        <Divider />
-        <NavLink to="/news" onClick={() => setClick(false)}>
-          <BiNews />
-          {click ? <h5>News</h5> : ""}
-        </NavLink>
-        <NavLink to="/feed" onClick={() => setClick(false)}>
-          <BsFilePost />
-          {click ? <h5>Feed</h5> : ""}
-        </NavLink>
-        <Divider />
-        <NavLink to="/bookmarks" onClick={() => setClick(false)}>
-          <BsFillBookmarksFill />
-          {click ? <h5>Bookmarks</h5> : ""}
-        </NavLink>
-        <NavLink to="/favourites" onClick={() => setClick(false)}>
-          <AiFillHeart />
-          {click ? <h5>Favourites</h5> : ""}
-        </NavLink>
-      </SidebarContainer>
-    </div>
+    <ClickAwayListener onClickAway={() => setClick(false)}>
+      <div>
+        <NavButtonContainer clicked={click}>
+          <NavButton
+            clicked={click}
+            onClick={() => handleClick()}
+            whileHover={{
+              scale: 1.1,
+              transition: { duration: 0.2 },
+            }}
+            whileTap={{ scale: 0.6 }}
+          >
+            <BiMenu />
+          </NavButton>
+          <h6>¢ryptodesk</h6>
+        </NavButtonContainer>
+        <SidebarContainer clicked={click}>
+          <NavLink to="/" onClick={() => setClick(false)}>
+            <AiFillHome />
+            {click ? <h5>Home</h5> : ""}
+          </NavLink>
+          <NavLink to="/cryptocurrencies" onClick={() => setClick(false)}>
+            <AiFillFund />
+            {click ? <h5>Cryptocurrencies</h5> : ""}
+          </NavLink>
+          <NavLink to="/exchanges" onClick={() => setClick(false)}>
+            <BsCurrencyExchange />
+            {click ? <h5>Exchanges</h5> : ""}
+          </NavLink>
+          <Divider />
+          <NavLink to="/news" onClick={() => setClick(false)}>
+            <BiNews />
+            {click ? <h5>News</h5> : ""}
+          </NavLink>
+          <NavLink to="/feed" onClick={() => setClick(false)}>
+            <BsFilePost />
+            {click ? <h5>Feed</h5> : ""}
+          </NavLink>
+          <Divider />
+          <NavLink to="/bookmarks" onClick={() => setClick(false)}>
+            <BsFillBookmarksFill />
+            {click ? <h5>Bookmarks</h5> : ""}
+          </NavLink>
+          <NavLink to="/favourites" onClick={() => setClick(false)}>
+            <AiFillHeart />
+            {click ? <h5>Favourites</h5> : ""}
+          </NavLink>
+        </SidebarContainer>
+      </div>
+    </ClickAwayListener>
   );
 };
 
@@ -90,9 +93,11 @@ const SidebarContainer = styled.div<SidebarContainerProps>`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-
+  z-index: 100;
   position: fixed;
-
+  -webkit-box-shadow: 24px 0px 64px -13px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 24px 0px 64px -13px rgba(0, 0, 0, 1);
+  box-shadow: 24px 0px 64px -13px rgba(0, 0, 0, 1);
   width: ${(props) => (props.clicked ? "15rem" : "3.5rem")};
   transition: all 0.5s ease;
   .active {
@@ -163,6 +168,10 @@ const NavButtonContainer = styled.div<SidebarContainerProps>`
   border-radius: 0 20px 20px 0;
   transition: 0.5s ease;
   position: fixed;
+  z-index: 100;
+  -webkit-box-shadow: 24px 0px 64px -13px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 24px 0px 64px -13px rgba(0, 0, 0, 1);
+  box-shadow: 24px 0px 64px -13px rgba(0, 0, 0, 1);
 
   h6 {
     display: ${(props) => (props.clicked ? "inline" : "none")};

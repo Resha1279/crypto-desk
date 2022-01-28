@@ -13,7 +13,7 @@ export const Container = styled.div<ContainerProps>`
 `;
 
 export const PageContainer = styled.div`
-  padding: 0.6rem 4rem 0 18rem;
+  padding: 0rem 4rem 0 18rem;
 `;
 
 export const SidebarContainer = styled.div<SidebarContainerProps>`

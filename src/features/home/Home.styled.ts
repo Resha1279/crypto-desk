@@ -6,7 +6,6 @@ export const CryptoStatsContainer = styled.div`
   flex-wrap: wrap;
   gap: 2.5em;
   margin-top: 2em;
-  margin-bottom: 8em;
 `;
 
 export const StatsCard = styled.div`
