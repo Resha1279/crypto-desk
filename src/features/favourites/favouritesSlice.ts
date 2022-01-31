@@ -21,13 +21,13 @@ export const favouritesSlice = createSlice({
     addFavourite: (state, action: PayloadAction<{ id: string }>) => {
       const { id } = action.payload;
       if (id && !state.value.includes(id)) {
-        localStorage.clear();
+        localStorage.removeItem("favlist");
         state.value.push(id);
         localStorage.setItem("favlist", JSON.stringify(state.value));
       }
     },
     removeFavourite: (state, action: PayloadAction<{ id: string }>) => {
-      localStorage.clear();
+      localStorage.removeItem("favlist");
       state.value = state.value.filter((item) => item !== action.payload.id);
       localStorage.setItem("favlist", JSON.stringify(state.value));
     },

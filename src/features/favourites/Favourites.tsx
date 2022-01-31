@@ -7,25 +7,27 @@ import { Cryptos } from "../cryptocurrencies/type";
 import CryptoCard from "../cryptocurrencies/CryptoCard";
 import { addFavourite, removeFavourite } from "./favouritesSlice";
 import styled from "styled-components";
+import { useGetCryptosQuery } from "../../services/cryptoApi";
 
 interface Props {}
 
 const Favourites: FC = (props: Props) => {
+  const { data: cryptoList, isFetching } = useGetCryptosQuery(100);
+
   const favListids = useSelector((state: RootState) => state.favourites.value);
-  const cryptoList = useSelector(
-    (state: RootState) => state.cryptocurrency.value
-  );
 
   const [favourites, setFavourites] = useState<Cryptos[]>([]);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const favList: Cryptos[] = cryptoList.filter((crypto: Cryptos) =>
-      favListids.includes(crypto.uuid)
-    );
-    setFavourites(favList);
-    console.log("favList", favList);
+    if (!isFetching && cryptoList) {
+      const fetchedCryptos: Cryptos[] = cryptoList?.data?.coins;
+      const favList: Cryptos[] = fetchedCryptos.filter((crypto: Cryptos) =>
+        favListids.includes(crypto.uuid)
+      );
+      setFavourites(favList);
+    }
   }, [favListids, cryptoList]);
 
   const handleFavToggle = (
@@ -40,6 +42,10 @@ const Favourites: FC = (props: Props) => {
       dispatch(addFavourite({ id: uuid }));
     }
   };
+
+  if (isFetching) {
+    return <p>Loading..</p>;
+  }
   return (
     <RouteMotion>
       <PageContainer>

@@ -22,12 +22,12 @@ export const bookmarksSlice = createSlice({
     addBookmark: (state, action: PayloadAction<{ news: CryptoNews }>) => {
       const { news } = action.payload;
 
-      localStorage.clear();
+      localStorage.removeItem("newslist");
       state.value.push(news);
       localStorage.setItem("newslist", JSON.stringify(state.value));
     },
     removeBookmark: (state, action: PayloadAction<{ url: string }>) => {
-      localStorage.clear();
+      localStorage.removeItem("newslist");
       state.value = state.value.filter(
         (item) => item.url !== action.payload.url
       );

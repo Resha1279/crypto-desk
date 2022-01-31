@@ -28,8 +28,10 @@ const CryptoList: FC<Props> = ({ simplified }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    const fetchedCryptos: Cryptos[] = cryptosList?.data?.coins;
-    dispatch(addCryptoList(fetchedCryptos));
+    if (!isFetching && cryptosList) {
+      const fetchedCryptos: Cryptos[] = cryptosList?.data?.coins;
+      dispatch(addCryptoList(fetchedCryptos));
+    }
   }, [cryptosList]);
 
   useEffect(() => {
