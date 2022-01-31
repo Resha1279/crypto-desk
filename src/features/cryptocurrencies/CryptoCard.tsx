@@ -17,43 +17,45 @@ interface Props {
 
 const CryptoCard: FC<Props> = ({ crypto, handleFavToggle, favlist }) => {
   return (
-    <NavLink to={`/crypto/${crypto.uuid}`}>
-      <Card color={crypto.color === null ? "blue" : crypto.color}>
-        <h5>
-          {crypto.name} ({crypto.symbol})
-        </h5>
-        <CoinLogo src={crypto.iconUrl} alt="icon" />
+    <CardContainer>
+      <NavLink to={`/crypto/${crypto.uuid}`}>
+        <Card color={crypto.color === null ? "blue" : crypto.color}>
+          <h5>
+            {crypto.name} ({crypto.symbol})
+          </h5>
+          <CoinLogo src={crypto.iconUrl} alt="icon" />
 
-        <IconButton
-          onClick={(e) => handleFavToggle(e, crypto.uuid)}
-          whileHover={{
-            scale: 1.1,
-            transition: { duration: 0.2 },
-          }}
-          whileTap={{ scale: 0.6 }}
-        >
-          {favlist.includes(crypto.uuid) ? (
-            <AiFillHeart color="red" />
-          ) : (
-            <HeartOutlined />
-          )}
-        </IconButton>
-        <CardContent>
-          <p>Price: &#36;{millify(crypto.price)}</p>
-          <p>
-            BTC Price:{" "}
-            {new Intl.NumberFormat("en-US", {
-              maximumSignificantDigits: 3,
-              style: "currency",
-              currency: "BTC",
-            }).format(crypto.btcPrice)}
-          </p>
-          <p>Market Cap: {millify(crypto.marketCap)}</p>
-          <p>Daily Change: {millify(crypto.change)}%</p>
-          <Rank>#{crypto.rank}</Rank>
-        </CardContent>
-      </Card>
-    </NavLink>
+          <CardContent>
+            <p>Price: &#36;{millify(crypto.price)}</p>
+            <p>
+              BTC Price:{" "}
+              {new Intl.NumberFormat("en-US", {
+                maximumSignificantDigits: 3,
+                style: "currency",
+                currency: "BTC",
+              }).format(crypto.btcPrice)}
+            </p>
+            <p>Market Cap: {millify(crypto.marketCap)}</p>
+            <p>Daily Change: {millify(crypto.change)}%</p>
+            <Rank>#{crypto.rank}</Rank>
+          </CardContent>
+        </Card>
+      </NavLink>
+      <IconButton
+        onClick={(e) => handleFavToggle(e, crypto.uuid)}
+        whileHover={{
+          scale: 1.1,
+          transition: { duration: 0.2 },
+        }}
+        whileTap={{ scale: 0.6 }}
+      >
+        {favlist.includes(crypto.uuid) ? (
+          <AiFillHeart color="red" />
+        ) : (
+          <HeartOutlined />
+        )}
+      </IconButton>
+    </CardContainer>
   );
 };
 
@@ -62,6 +64,13 @@ export default CryptoCard;
 type CardProps = {
   color: string;
 };
+
+const CardContainer = styled.div`
+  position: relative;
+  flex: 1 0 10%;
+  min-width: 300px;
+  max-width: 400px;
+`;
 
 const Card = styled.div<CardProps>`
   background-color: var(--bg-secondary-dark);
