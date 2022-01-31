@@ -12,11 +12,10 @@ export const favouritesSlice = createSlice({
   name: "favourites",
   initialState,
   reducers: {
-    getFavourite: (state, action: PayloadAction<{ ids: string[] }>) => {
-      const { ids } = action.payload;
-      if (ids && ids?.length > 0) {
-        console.log("ids", ids);
-        state.value = ids;
+    getFavourite: (state) => {
+      const storedFavList = localStorage.getItem("favlist");
+      if (storedFavList && storedFavList.length > 0) {
+        state.value = JSON.parse(storedFavList);
       }
     },
     addFavourite: (state, action: PayloadAction<{ id: string }>) => {

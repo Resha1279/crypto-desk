@@ -21,11 +21,7 @@ import { useDispatch } from "react-redux";
 const App: FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    const storedFavList = localStorage.getItem("favlist");
-    console.log("storedFavList", storedFavList);
-    if (storedFavList) {
-      dispatch(getFavourite({ ids: JSON.parse(storedFavList) }));
-    }
+    dispatch(getFavourite());
   }, []);
 
   return (
