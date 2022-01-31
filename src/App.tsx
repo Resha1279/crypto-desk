@@ -16,12 +16,14 @@ import { AnimatePresence } from "framer-motion";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./style/theme";
 import { getFavourite } from "./features/favourites/favouritesSlice";
+import { getBookmarks } from "./features/bookmarks/bookmarksSlice";
 import { useDispatch } from "react-redux";
 
 const App: FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getFavourite());
+    dispatch(getBookmarks());
   }, []);
 
   return (

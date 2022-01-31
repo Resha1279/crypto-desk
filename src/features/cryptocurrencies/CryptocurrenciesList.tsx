@@ -96,12 +96,6 @@ const CardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 3em;
-
-  a {
-    flex: 1 0 10%;
-    min-width: 300px;
-    max-width: 400px;
-  }
 `;
 
 const Input = styled.input`

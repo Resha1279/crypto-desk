@@ -3,6 +3,7 @@ import { cryptoApi } from "../services/cryptoApi";
 import { cryptoNewsApi } from "../services/cryptoNewsApi";
 import favouritesReducer from "../features/favourites/favouritesSlice";
 import cryptocurrencyReducer from "../features/cryptocurrencies/cryptocurrenciesSlice";
+import bookmarksReducer from "../features/bookmarks/bookmarksSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     [cryptoNewsApi.reducerPath]: cryptoNewsApi.reducer,
     cryptocurrency: cryptocurrencyReducer,
     favourites: favouritesReducer,
+    bookmarks: bookmarksReducer,
   },
 });
 
