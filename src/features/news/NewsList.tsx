@@ -1,9 +1,8 @@
 import React, { FC, useState } from "react";
 import { useGetCryptoNewsQuery } from "../../services/cryptoNewsApi";
-import { Row } from "../../common";
 import moment from "moment";
 import { useGetCryptosQuery } from "../../services/cryptoApi";
-import { Cryptos } from "../cryptocurrencies/CryptocurrenciesList";
+import { Cryptos } from "../cryptocurrencies/type";
 import styled from "styled-components";
 
 interface Props {

@@ -6,7 +6,7 @@ import {
   useGetCryptosQuery,
 } from "../../services/cryptoApi";
 import { PageContainer, Row } from "../../style/common.styled";
-import { Cryptos } from "../cryptocurrencies/CryptocurrenciesList";
+import { Cryptos } from "../cryptocurrencies/type";
 import { motion } from "framer-motion";
 import { millify } from "millify";
 

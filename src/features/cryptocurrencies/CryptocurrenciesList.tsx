@@ -6,28 +6,10 @@ import styled from "styled-components";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { motion } from "framer-motion";
 import { Row, SectionContainer } from "../../style/common.styled";
+import { Cryptos } from "./type";
 
 interface Props {
   simplified?: boolean;
-}
-
-export interface Cryptos {
-  "24hVolume": string;
-  btcPrice: number;
-  change: number;
-  coinrankingUrl: string;
-  color: string;
-  iconUrl: string;
-  listedAt: number;
-  lowVolume: boolean;
-  marketCap: number;
-  name: string;
-  price: number;
-  rank: number;
-  sparkline: string[];
-  symbol: string;
-  tier: number;
-  uuid: string;
 }
 
 const CryptoList: FC<Props> = ({ simplified }) => {
