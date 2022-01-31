@@ -7,20 +7,27 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { motion } from "framer-motion";
 import { Row, SectionContainer } from "../../style/common.styled";
 import { Cryptos } from "./type";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../app/store";
+import {
+  addFavourite,
+  removeFavourite,
+} from "../../features/favourites/favouritesSlice";
 
 interface Props {
   simplified?: boolean;
 }
 
 const CryptoList: FC<Props> = ({ simplified }) => {
+  const favList = useSelector((state: RootState) => state.favourites.value);
+  const dispatch = useDispatch();
+
   const count: number = simplified ? 12 : 100;
 
   const { data: cryptosList, isFetching } = useGetCryptosQuery(count);
 
   const [cryptos, setCryptos] = useState<Cryptos[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-
-  const [favList, setFavList] = useState<string[]>([]);
 
   useEffect(() => {
     const filteredData: Cryptos[] = cryptosList?.data?.coins.filter(
@@ -31,9 +38,18 @@ const CryptoList: FC<Props> = ({ simplified }) => {
     setCryptos(filteredData);
   }, [cryptosList, searchTerm]);
 
-  useEffect(() => {
-    console.log("fav::", favList);
-  }, [favList]);
+  const handleFavToggle = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    uuid: string
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (favList.includes(uuid)) {
+      dispatch(removeFavourite({ id: uuid }));
+    } else {
+      dispatch(addFavourite({ id: uuid }));
+    }
+  };
 
   if (isFetching) {
     return <p>Loading..</p>;
@@ -66,14 +82,7 @@ const CryptoList: FC<Props> = ({ simplified }) => {
                   <CoinLogo src={crypto.iconUrl} alt="icon" />
 
                   <IconButton
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      if (favList.includes(crypto.uuid)) {
-                      } else {
-                        setFavList([...favList, crypto.uuid]);
-                      }
-                    }}
+                    onClick={(e) => handleFavToggle(e, crypto.uuid)}
                     whileHover={{
                       scale: 1.1,
                       transition: { duration: 0.2 },

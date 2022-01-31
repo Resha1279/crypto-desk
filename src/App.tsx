@@ -1,4 +1,4 @@
-import React, { FC, Suspense } from "react";
+import React, { FC, Suspense, useEffect } from "react";
 import GlobalStyles from "./style/GlobalStyle";
 import { Routes, Route } from "react-router-dom";
 import { Fallback, Layout, NotFoundPage, Page } from "./common";
@@ -15,8 +15,19 @@ import {
 import { AnimatePresence } from "framer-motion";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./style/theme";
+import { getFavourite } from "./features/favourites/favouritesSlice";
+import { useDispatch } from "react-redux";
 
 const App: FC = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const storedFavList = localStorage.getItem("favlist");
+    console.log("storedFavList", storedFavList);
+    if (storedFavList) {
+      dispatch(getFavourite({ ids: JSON.parse(storedFavList) }));
+    }
+  }, []);
+
   return (
     <>
       <ThemeProvider theme={theme}>
