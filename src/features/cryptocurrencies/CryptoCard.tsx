@@ -40,7 +40,14 @@ const CryptoCard: FC<Props> = ({ crypto, handleFavToggle, favlist }) => {
         </IconButton>
         <CardContent>
           <p>Price: &#36;{millify(crypto.price)}</p>
-          <p>BTC: {millify(crypto.btcPrice)} BTC</p>
+          <p>
+            BTC Price:{" "}
+            {new Intl.NumberFormat("en-US", {
+              maximumSignificantDigits: 3,
+              style: "currency",
+              currency: "BTC",
+            }).format(crypto.btcPrice)}
+          </p>
           <p>Market Cap: {millify(crypto.marketCap)}</p>
           <p>Daily Change: {millify(crypto.change)}%</p>
           <Rank>#{crypto.rank}</Rank>
