@@ -5,6 +5,7 @@ import { Cryptos } from "../cryptocurrencies/type";
 import NewsCard from "./NewsCard";
 import styled from "styled-components";
 import { CryptoNews } from "./type";
+import { Row } from "../../style/common.styled";
 
 interface Props {
   simplified?: boolean;
@@ -28,19 +29,25 @@ const NewsList: FC<Props> = ({ simplified }) => {
   return (
     <div>
       {simplified || (
-        <div>
-          <select
-            onChange={(e) => {
-              setNewsCategory(e.target.value);
-            }}
-          >
-            <option value="Cryptocurrency">Cryptocurrency</option>
-            {cryptocurrency?.data?.coins.map((coin: Cryptos) => (
-              <option value={coin.name}>{coin.name}</option>
-            ))}
-            s
-          </select>
-        </div>
+        <Row spaceBetween gap={50}>
+          <div>
+            <h1>Latest Crypto News</h1>
+          </div>
+          <SelectContainer>
+            <Select
+              onChange={(e) => {
+                setNewsCategory(e.target.value);
+              }}
+            >
+              <option value="Cryptocurrency">Cryptocurrency</option>
+              {cryptocurrency?.data?.coins.map((coin: Cryptos) => (
+                <option value={`${coin.name} (${coin.symbol}) coin`}>
+                  {coin.name}
+                </option>
+              ))}
+            </Select>
+          </SelectContainer>
+        </Row>
       )}
       <CardContainer>
         {isFetching ? (
@@ -61,5 +68,19 @@ const CardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 2em;
-  margin-top: 3em;
+  margin-top: 2em;
+`;
+
+const SelectContainer = styled.div`
+  flex: 1;
+`;
+
+const Select = styled.select`
+  max-width: 300px;
+  min-width: 150px;
+  padding: 1em;
+  border-radius: 6px;
+  background-color: var(--bg-secondary-dark);
+  color: var(--text-secondary-white);
+  float: right;
 `;

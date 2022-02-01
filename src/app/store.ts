@@ -9,6 +9,7 @@ export const store = configureStore({
   reducer: {
     [cryptoApi.reducerPath]: cryptoApi.reducer,
     [cryptoNewsApi.reducerPath]: cryptoNewsApi.reducer,
+    //todo: remove below
     cryptocurrency: cryptocurrencyReducer,
     favourites: favouritesReducer,
     bookmarks: bookmarksReducer,

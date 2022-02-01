@@ -19,7 +19,7 @@ const GlobalStyles = createGlobalStyle`
 
   html {
     --text-small: 0.9rem;
-    --text-medium: 1rem;
+    --text-medium: 1.3rem;
     --text-large: 1.5rem;
     @media (min-width: 1024px) {
       --text-small: 1rem;
