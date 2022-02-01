@@ -69,7 +69,6 @@ const CardContainer = styled.div`
   position: relative;
   flex: 1 0 10%;
   min-width: 300px;
-  max-width: 400px;
 `;
 
 const Card = styled.div<CardProps>`

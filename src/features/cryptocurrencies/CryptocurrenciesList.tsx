@@ -63,14 +63,20 @@ const CryptoList: FC<Props> = ({ simplified }) => {
     <div>
       {simplified || (
         <SectionContainer>
-          <Row justify="end">
-            <Input
-              type="search"
-              placeholder="Search.."
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-              }}
-            />
+          <Row spaceBetween gap={50}>
+            <div>
+              <h1>Top Cryptocurrencies in the World</h1>
+            </div>
+
+            <InputContainer>
+              <Input
+                type="search"
+                placeholder="Search.."
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                }}
+              />
+            </InputContainer>
           </Row>
         </SectionContainer>
       )}
@@ -100,9 +106,15 @@ const CardContainer = styled.div`
   gap: 3em;
 `;
 
+const InputContainer = styled.div`
+  flex: 1;
+`;
+
 const Input = styled.input`
   padding: 1em;
   border-radius: 8px;
   border: 1px solid var(--primary);
-  width: 250px;
+  min-width: 300px;
+  max-width: 500px;
+  float: right;
 `;
