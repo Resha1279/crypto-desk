@@ -16,7 +16,7 @@ export interface Cryptos {
   name: string;
   price: number;
   rank: number;
-  sparkline: string[];
+  sparkline: number[];
   symbol: string;
   tier: number;
   uuid: string;

@@ -5,6 +5,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { millify } from "millify";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { Sparklines, SparklinesCurve } from "react-sparklines";
 
 interface Props {
   crypto: Cryptos;
@@ -24,7 +25,17 @@ const CryptoCard: FC<Props> = ({ crypto, handleFavToggle, favlist }) => {
             {crypto.name} ({crypto.symbol})
           </h5>
           <CoinLogo src={crypto.iconUrl} alt="icon" />
-
+          <SparklinesContainer>
+            <Sparklines data={crypto.sparkline}>
+              <SparklinesCurve
+                style={{
+                  stroke: "#a4b2bc",
+                  fill: `${crypto.color || "white"}`,
+                  fillOpacity: ".5",
+                }}
+              />
+            </Sparklines>
+          </SparklinesContainer>
           <CardContent>
             <p>Price: &#36;{millify(crypto.price)}</p>
             <p>
@@ -131,4 +142,8 @@ const Rank = styled.p`
 const HeartOutlined = styled(AiOutlineHeart)`
   color: var(--text-secondary-white);
   opacity: 0.5;
+`;
+
+const SparklinesContainer = styled.div`
+  padding-top: 1.5em;
 `;
