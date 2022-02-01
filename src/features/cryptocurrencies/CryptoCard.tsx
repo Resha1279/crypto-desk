@@ -30,7 +30,7 @@ const CryptoCard: FC<Props> = ({ crypto, handleFavToggle, favlist }) => {
               <SparklinesCurve
                 style={{
                   stroke: "#a4b2bc",
-                  fill: `${crypto.color || "white"}`,
+                  fill: `${crypto.color || "blue"}`,
                   fillOpacity: ".5",
                 }}
               />
