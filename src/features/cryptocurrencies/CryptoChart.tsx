@@ -85,9 +85,9 @@ const CryptoChart: FC<Props> = ({
       {
         label: "Price in USD",
         data: coinPrice,
-        fill: false,
+        fill: true,
         backgroundColor: coinColor,
-        borderColor: coinColor,
+        borderColor: "#fff",
       },
     ],
   };
@@ -110,9 +110,9 @@ const CryptoChart: FC<Props> = ({
       <ChartHeader color={coinColor}>
         <h1>{coinName} price chart</h1>
 
-        <h4>
+        <h5>
           Current {coinName} price : $ {currentPrice} ({coinHistory?.change}%)
-        </h4>
+        </h5>
       </ChartHeader>
 
       <Line data={data} options={options} />
@@ -127,10 +127,10 @@ type ChartHeaderProps = {
 };
 
 const ChartContainer = styled(motion.div)`
-  background-color: var(--white);
   padding: 2em;
-  border-radius: 2em;
+  border-radius: 1em;
   margin: 2em 0;
+  border: 1px solid var(--dull);
 `;
 
 const ChartHeader = styled.div<ChartHeaderProps>`
@@ -138,9 +138,9 @@ const ChartHeader = styled.div<ChartHeaderProps>`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2em;
-
+  /* 
   h1,
   h4 {
     color: ${({ color }) => color};
-  }
+  } */
 `;

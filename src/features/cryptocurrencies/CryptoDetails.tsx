@@ -17,10 +17,14 @@ import {
   AiOutlineStop,
   AiOutlineCheck,
 } from "react-icons/ai";
-import { ColoredText, PageContainer, RouteMotion } from "../../common";
+import { RouteMotion } from "../../common";
 import styled from "styled-components";
 
-import { Row } from "../../style/common.styled";
+import {
+  PageContainer,
+  Row,
+  SectionContainer,
+} from "../../style/common.styled";
 import { motion } from "framer-motion";
 
 import CryptoChart from "./CryptoChart";
@@ -151,13 +155,13 @@ const CryptoDetails: FC = (props: Props) => {
     <RouteMotion>
       <PageContainer>
         <Row spaceBetween align="end">
-          <div>
+          <Title>
             <h1>{cryptoDetails.name} </h1>
             <p>
               {cryptoDetails.name} live price in Us Dollars. View value
               statistics, market cap and supply.
             </p>
-          </div>
+          </Title>
           <Select
             defaultValue={timePeriod}
             onChange={(e) => {
@@ -179,8 +183,11 @@ const CryptoDetails: FC = (props: Props) => {
           currentPrice={millify(cryptoDetails.price)}
         />
 
-        <div>
-          <h2>{cryptoDetails.name} value statistics</h2>
+        <SectionContainer>
+          <Title>
+            <h1>{cryptoDetails.name} value statistics</h1>
+          </Title>
+
           <Row gap={20}>
             {stats.map(({ icon, title, value }) => (
               <Card key={title}>
@@ -203,22 +210,34 @@ const CryptoDetails: FC = (props: Props) => {
               </Card>
             ))}
           </Row>
-        </div>
+        </SectionContainer>
 
-        <h1>What is {cryptoDetails.name}?</h1>
+        <SectionContainer>
+          <Title>
+            <h1>What is {cryptoDetails.name}?</h1>
+          </Title>
 
-        {HTMLReactParser(cryptoDetails.description)}
+          <DescriptionContainer>
+            {HTMLReactParser(cryptoDetails.description)}
+          </DescriptionContainer>
+        </SectionContainer>
 
-        <h1>{cryptoDetails.name} Links</h1>
+        <SectionContainer>
+          <Title>
+            <h1>{cryptoDetails.name} Links</h1>
+          </Title>
 
-        {cryptoDetails.links.map((link) => (
-          <div key={link.name}>
-            <ColoredText>{link.type}</ColoredText>
-            <a href={link.url} target="_blank" rel="noreferrer">
-              {link.name}
-            </a>
-          </div>
-        ))}
+          {cryptoDetails.links.map((link) => (
+            <LinksContainer key={link.name} whileHover={{ translateX: 5 }}>
+              <a href={link.url} target="_blank" rel="noreferrer">
+                <div>
+                  <h3>{link.type}</h3>
+                  <h4>{link.name}</h4>
+                </div>
+              </a>
+            </LinksContainer>
+          ))}
+        </SectionContainer>
       </PageContainer>
     </RouteMotion>
   );
@@ -258,4 +277,39 @@ const Icon = styled.div<CardProps>`
   background-color: ${({ color }) => color || "#0071bd"};
   border-radius: 4px;
   font-weight: 900;
+`;
+
+const Title = styled.div`
+  margin-bottom: 2em;
+`;
+
+const DescriptionContainer = styled.div`
+  h3 {
+    font-size: var(--text-large);
+    margin: 1em 0;
+    font-weight: 600;
+  }
+
+  p {
+    line-height: 1.8;
+    text-align: justify;
+  }
+`;
+
+const LinksContainer = styled(motion.div)`
+  margin: 1em 0;
+  max-width: 500px;
+  border: 1px solid var(--dull);
+
+  border-radius: 0.5em;
+  &:hover {
+    border-color: var(--white);
+  }
+
+  div {
+    width: 100%;
+    height: 100%;
+
+    padding: 1em;
+  }
 `;
