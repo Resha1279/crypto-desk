@@ -1,3 +1,11 @@
+# Crypto Desk
+
+This project uses ReactJs, Redux Toolkit, Styled Components, RTK Query, Framer Motion, react-sparkline, chart.js, coinranking1 api and bing-news-search1 api.
+
+The user can view, search and filter global crypto stats and recent crypto news, add to favourites and bookmarks.
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
